@@ -13,12 +13,8 @@ export default class DBArtists extends DBEntity<
     CreateArtistDTO,
     ChangeArtistDTO
 > {
-  async create(dto: CreateArtistDTO) {
-    const created: ArtistEntity = {
-      ...dto,
-      id: crypto.randomUUID(),
-    };
-    this.entities.push(created);
-    return created;
+  async create(dto: ArtistEntity) {
+    this.entities.push(dto);
+    return dto;
   }
 }

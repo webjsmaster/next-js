@@ -9,31 +9,31 @@ import {
 	Post,
 	UseInterceptors,
 } from '@nestjs/common'
-import { DB } from '../DB/db.sevice'
-import { CreateUserDTO, UserEntity } from './dto/user.dto'
+import { CreateUserDTO } from 'src/DB/entities/DBUsers'
+import { UsersService } from './users.service'
 
 //nest g controller users
 
 @Controller('users')
 export class UsersController {
-	constructor(private readonly db: DB) {}
+	constructor(private readonly usersService: UsersService) {}
 
+	@UseInterceptors(ClassSerializerInterceptor)
 	@Get()
-	async getAll(): Promise<UserEntity[]> {
-		return await this.db.users.findMany()
+	getAll() {
+		return this.usersService.getAll()
 	}
 
+	@UseInterceptors(ClassSerializerInterceptor)
 	@Get(':id')
-	async getOne(@Param('id') id: string): Promise<UserEntity> {
-		return await this.db.users.findOne({ key: 'id', equals: id })
+	getOne(@Param('id') id: string) {
+		return this.usersService.getOne(id)
 	}
 
 	@UseInterceptors(ClassSerializerInterceptor)
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
-	async create(@Body() CreateUserDTO: CreateUserDTO) {
-		const user = await this.db.users.create(CreateUserDTO)
-
-		return user
+	create(@Body() CreateUserDTO: CreateUserDTO) {
+		return this.usersService.create(CreateUserDTO)
 	}
 }

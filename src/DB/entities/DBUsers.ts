@@ -1,27 +1,23 @@
-import * as crypto from 'node:crypto'
 import DBEntity from './DBEntity'
-import {
-	ChangeUserDTO,
-	CreateUserDTO,
-	UserEntity,
-} from '../../users/dto/user.dto'
 
+export type UserEntity = {
+	id: string // uuid v4
+	login: string
+	password: string
+	version: number // integer number, increments on update
+	createdAt: number // timestamp of creation
+	updatedAt: number // timestamp of last update
+}
+
+export type CreateUserDTO = Omit<UserEntity, 'id'>
+export type ChangeUserDTO = Partial<Omit<UserEntity, 'id'>>
 export default class DBUsers extends DBEntity<
 	UserEntity,
 	ChangeUserDTO,
 	CreateUserDTO
 > {
-	async create(dto: CreateUserDTO) {
-		const date = +new Date()
-
-		const created: UserEntity = {
-			...dto,
-			id: crypto.randomUUID(),
-			version: 1,
-			createdAt: date,
-			updatedAt: date,
-		}
-		this.entities.push(created)
-		return created
+	async create(dto: UserEntity) {
+		this.entities.push(dto)
+		return dto
 	}
 }

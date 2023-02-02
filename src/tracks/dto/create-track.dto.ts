@@ -15,6 +15,10 @@ export class CreateTrackDto {
 	}
 }
 
+export class TracksDto {
+	constructor(private Tracks: CreateTrackDto) {}
+}
+
 // import { Exclude } from 'class-transformer'
 
 // export class TrackEntity {

@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common'
-import DBMemberTypes from './entities/DBMemberTypes'
-import DBPosts from './entities/DBPosts'
-import DBProfiles from './entities/DBProfiles'
 import DBUsers from './entities/DBUsers'
 import * as lodash from 'lodash'
 import DBArtists from './entities/DBArtists'
+import DBTracks from './entities/DBTracks'
+import DBAlbum from './entities/DBAlbum'
+import DBFavorites from './entities/DBFavorites'
 
 @Injectable()
 export class DB {
 	users = new DBUsers()
-	profiles = new DBProfiles()
-	memberTypes = new DBMemberTypes()
-	posts = new DBPosts()
-
 	artist = new DBArtists()
+	tracks = new DBTracks()
+	album = new DBAlbum()
+	favorites = new DBFavorites()
 
 	constructor() {
 		const deepCopyResultTrap: ProxyHandler<any> = {

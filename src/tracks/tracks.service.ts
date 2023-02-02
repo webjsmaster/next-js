@@ -1,7 +1,8 @@
 import * as crypto from 'node:crypto'
 import { Injectable } from '@nestjs/common'
-import { CreateTrackDto } from './dto/create-track.dto'
-import { DB } from 'src/DB/db.sevice'
+import { CreateTrackDto, TracksDto } from './dto/create-track.dto'
+import { DB } from 'src/DB/db.service'
+import { TracksEntity } from 'src/DB/entities/DBTracks'
 
 @Injectable()
 export class TracksService {
@@ -14,8 +15,12 @@ export class TracksService {
 	// }
 
 	async getAll() {
-		console.log('📢 [tracks.service.ts:20]', await this.db.artist.findMany())
-		return []
+		const tracksAll = await this.db.tracks.findMany()
+		const arr: CreateTrackDto[] = []
+		tracksAll.forEach((track) => {
+			arr.push(new CreateTrackDto(track))
+		})
+		return arr
 	}
 
 	// getById(id: string) {
@@ -26,7 +31,7 @@ export class TracksService {
 			...tracks,
 			id: crypto.randomUUID(),
 		})
-		this.tracks.push(track)
+		this.db.tracks.create(track as TracksEntity)
 		return track
 	}
 }
