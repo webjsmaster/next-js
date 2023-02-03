@@ -13,8 +13,10 @@ export class ArtistService {
 	// 	return fav
 	// }
 
-	async create(id: string) {
-		const favoriteService = this.moduleRef.get(FavoritesService)
-		return favoriteService.addArtist(id)
+	async getAll() {
+		console.log( '📌:', this.db.favorites.getFav() )
+
 	}
+
+
 }

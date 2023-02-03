@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common'
 import { AlbumsService } from './albums.service'
 
-@Controller('favs/albums')
+@Controller('--')
 export class AlbumsController {
 	constructor(private readonly artistService: AlbumsService) {}
 

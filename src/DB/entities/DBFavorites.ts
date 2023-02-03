@@ -7,16 +7,18 @@ export type FavoritesEntity = {
 }
 
 export default class DBFavorites {
-	private favorites: FavoritesEntity = {
+	favorites: FavoritesEntity = {
 		albums: [],
 		artists: [],
 		tracks: [],
 	}
 
 	constructor() {
-		this.favorites.albums = []
-		this.favorites.artists = []
-		this.favorites.tracks = []
+		// this.favorites.albums = []
+		// this.favorites.artists = []
+		// this.favorites.tracks = []
+		this.getFav = this.getFav.bind(this)
+		this.addArt = this.addArt.bind(this)
 	}
 
 	async getFavorites() {
@@ -28,6 +30,20 @@ export default class DBFavorites {
 		this.favorites.artists.push(id)
 		return this.favorites.artists
 	}
+
+
+	getFav = () => {
+		console.log('📢 [DBFavorites.ts:23]', this.favorites)
+		return this.favorites
+	}
+
+	addArt = (id:string) => {
+		this.favorites.artists.push(id)
+
+		console.log( '📌:ADD!!!!!======>>>',  this.favorites)
+
+	}
+
 	async deleteArtist(id: string) {
 		const arr: string[] = this.favorites.artists.filter((artId) => artId !== id)
 		return (this.favorites.artists = arr)

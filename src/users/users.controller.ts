@@ -36,4 +36,11 @@ export class UsersController {
 	create(@Body() CreateUserDTO: CreateUserDTO) {
 		return this.usersService.create(CreateUserDTO)
 	}
+
+	@UseInterceptors(ClassSerializerInterceptor)
+	@Post()
+	@HttpCode(HttpStatus.CREATED)
+	update(@Body() CreateUserDTO: CreateUserDTO) {
+		return this.usersService.create(CreateUserDTO)
+	}
 }
